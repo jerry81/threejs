@@ -35,6 +35,26 @@ initialization:
     AmbientLight, DirectionalLight x2 added to scene 
     loads model (loadPerryLeeSmith)
     creates a buffer geometry, creates a line from it, and adds the line to the scene
+    raycaster added (for lighting?)
+    adds an invisible mousehelper 
+    add mouse event handlers
+    on each move, check for intersection with model 
+    on pointer up, call shoot if there is intersection
+
+checkIntersection(x,y):
+    takes in event x and y as inputs
+    populates mouse, vector2 
+    raycaster.setFromCamera(mouse (vector2), camera)
+
+load model: 
+    glb file loaded with gltfLoader 
+    has 3 texture images - map is skin color - basically skin of face without bones
+    normalMap - flourescent blue 
+    specularMap - black and white greyscale 
+    adds to scene (declared as global)
+    mesh.scale.set to scale the model 
+
+
 
 ### definitions
 
@@ -55,3 +75,15 @@ specular - having properties of a mirror
 device pixel ratio: ratio between physical and logic pixels
 
 buffergeometry: representation of mesh, ilne or point
+
+glb file - can be opened with ms paint 3d, or any program that can open glTF files 
+binary version of glTF 2.0
+
+three.boxgeometry geometry of rectangular cuboid
+
+NDC: normalized device coordinates - three based on webgl based on opengl es  
+
+Mesh: polygon mesh verticies, edges, faces making up 3d object
+
+Dat gui - lightweight js framework for creating ui 
+

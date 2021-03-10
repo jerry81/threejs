@@ -109,7 +109,7 @@
 				const geometry = new THREE.BufferGeometry();
 				geometry.setFromPoints( [ new THREE.Vector3(), new THREE.Vector3() ] );
 
-				line = new THREE.Line( geometry, new THREE.LineBasicMaterial() );
+				line = new THREE.Line( geometry, new THREE.LineBasicMaterial() ); // three line using a basic material
 				scene.add( line );
 
 				loadLeePerrySmith();
@@ -164,28 +164,31 @@
 
 					if ( mesh === undefined ) return;
 
-					mouse.x = ( x / window.innerWidth ) * 2 - 1;
+					// normalize device coordinates mouse : sets to value between [-1:1]
+
+					mouse.x = ( x / window.innerWidth ) * 2 - 1; // inner width of visual viewport, ratio of mouse offset / window width 
 					mouse.y = - ( y / window.innerHeight ) * 2 + 1;
 
-					raycaster.setFromCamera( mouse, camera );
-					raycaster.intersectObject( mesh, false, intersects );
-
+					raycaster.setFromCamera( mouse, camera ); // raycaster is especially used for mouse picking.  originates from camera, ends at mouse coordinate
+					raycaster.intersectObject( mesh, false, intersects );// at this point, ray is set, just pass in object, intersects is an array optional a place to put the results
+					// could also use return value 
+					
 					if ( intersects.length > 0 ) {
 
-						const p = intersects[ 0 ].point;
-						mouseHelper.position.copy( p );
-						intersection.point.copy( p );
+						const p = intersects[ 0 ].point; //intersected point
+						mouseHelper.position.copy( p ); // mouseHelper - a mesh
+						intersection.point.copy( p ); 
 
-						const n = intersects[ 0 ].face.normal.clone();
+						const n = intersects[ 0 ].face.normal.clone(); // intersected face
 						n.transformDirection( mesh.matrixWorld );
 						n.multiplyScalar( 10 );
 						n.add( intersects[ 0 ].point );
 
 						intersection.normal.copy( intersects[ 0 ].face.normal );
-						mouseHelper.lookAt( n );
+						mouseHelper.lookAt( n ); // reorients object to face a direction
 
-						const positions = line.geometry.attributes.position;
-						positions.setXYZ( 0, p.x, p.y, p.z );
+						const positions = line.geometry.attributes.position; // visible line between mouse to object - geometry is buffergeometry
+						positions.setXYZ( 0, p.x, p.y, p.z ); // 2 points
 						positions.setXYZ( 1, n.x, n.y, n.z );
 						positions.needsUpdate = true;
 
