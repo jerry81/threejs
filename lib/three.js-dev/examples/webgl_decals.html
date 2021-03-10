@@ -242,20 +242,20 @@
 			function shoot() {
 
 				position.copy( intersection.point );
-				orientation.copy( mouseHelper.rotation );
+				orientation.copy( mouseHelper.rotation ); // mousehelper has stored the intersection in a mesh
 
-				if ( params.rotate ) orientation.z = Math.random() * 2 * Math.PI;
+				if ( params.rotate ) orientation.z = Math.random() * 2 * Math.PI; // random rotation
 
-				const scale = params.minScale + Math.random() * ( params.maxScale - params.minScale );
+				const scale = params.minScale + Math.random() * ( params.maxScale - params.minScale ); // random size
 				size.set( scale, scale, scale );
 
-				const material = decalMaterial.clone();
-				material.color.setHex( Math.random() * 0xffffff );
+				const material = decalMaterial.clone(); // mesh phong material
+				material.color.setHex( Math.random() * 0xffffff ); // random color
 
-				const m = new THREE.Mesh( new DecalGeometry( mesh, position, orientation, size ), material );
+				const m = new THREE.Mesh( new DecalGeometry( mesh, position, orientation, size ), material ); // mesh - the face, position - intersection point
 
-				decals.push( m );
-				scene.add( m );
+				decals.push( m ); // decals add mesh, for removing later
+				scene.add( m ); 
 
 			}
 
